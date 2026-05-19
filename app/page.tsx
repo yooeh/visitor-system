@@ -2,10 +2,10 @@ import Image from "next/image";
 
 const menus = [
   { label: "정책/권한 설정", icon: "settings" },
-  { label: "방문객 조회 및 수정", icon: "searchUser" },
+  { label: "방문객 조회 및 수정", icon: "user" },
   { label: "예외 승인/이슈 대응", icon: "alert" },
   { label: "방문객 현황 리포트", icon: "chart" },
-  { label: "방문증 관리", icon: "badge" },
+  { label: "방문증 관리", icon: "tools" },
 ];
 
 const metrics = [
@@ -268,6 +268,10 @@ function SidebarIcon({
       "M4 19V5m0 14h16M8 16v-5m4 5V8m4 8v-7",
     badge:
       "M7 3h10a2 2 0 0 1 2 2v16l-7-3-7 3V5a2 2 0 0 1 2-2Zm3 5h4m-4 4h4",
+    passCard:
+      "M5 5h14a2 2 0 0 1 2 2v10a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V7a2 2 0 0 1 2-2Zm3 4.5a2 2 0 1 0 0-4 2 2 0 0 0 0 4Zm0 3.5c2.2 0 4 1 4.5 2.5H7.5C8 13 9.8 12 12 12Z",
+    tools:
+      "M11.4 15.2 17.3 21a2.6 2.6 0 0 0 3.7-3.7l-5.9-5.9m-3.7 3.7 2.5-3c.3-.4.7-.6 1.2-.8m-3.7 3.7-4.7 5.7a2.5 2.5 0 1 1-3.6-3.6l6.8-5m5.9 6.1-2.9 2.9m2.9-2.9L18 12.5",
     calendar:
       "M7 3v3m10-3v3M4 9h16M6 5h12a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V7a2 2 0 0 1 2-2Zm2 8h3m3 0h3m-9 4h3m3 0h3",
     enter:
@@ -718,15 +722,10 @@ export default function Home() {
               <MiniTrendChart />
 
               <section className="h-full rounded-[18px] bg-gray-0 p-5 shadow-level-1">
-                <div className="flex flex-col gap-2 sm:flex-row sm:items-end sm:justify-between">
-                  <div>
-                    <h2 className="flex items-center gap-2 text-heading-2 font-bold text-gray-900">
-                      <SectionTitleIcon name="alert" />
-                      예외/이슈 발생 알림
-                    </h2>
-                  </div>
-                  <p className="text-body-3 text-gray-500">최신순</p>
-                </div>
+                <h2 className="flex items-center gap-2 text-heading-2 font-bold text-gray-900">
+                  <SectionTitleIcon name="alert" />
+                  예외/이슈 발생 알림
+                </h2>
                 <div className="mt-5 space-y-0">
                   {alerts.map((alert, index) => (
                     <article className="relative flex gap-3 pb-2 last:pb-0" key={alert.title}>

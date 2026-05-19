@@ -28,6 +28,22 @@ const collapsedDivision = (id: string) => ({
 
 type OrgPerson = { id: string; name: string; role: string; selected?: boolean };
 
+const ROLE_RANK: Record<string, number> = {
+  Unit장: 0,
+  팀장: 1,
+  차장: 2,
+  과장: 3,
+  대리: 4,
+  사원: 5,
+  담당자: 1,
+};
+
+function sortByRole(members: OrgPerson[]): OrgPerson[] {
+  return [...members].sort(
+    (a, b) => (ROLE_RANK[a.role] ?? 99) - (ROLE_RANK[b.role] ?? 99),
+  );
+}
+
 function buildPlatformTree(focus: {
   unitLabel: string;
   members: OrgPerson[];
@@ -73,7 +89,7 @@ function buildPlatformTree(focus: {
               label: focus.unitLabel,
               count: focus.members.length,
               defaultExpanded: true,
-              children: focus.members.map((member) => ({
+              children: sortByRole(focus.members).map((member) => ({
                 id: member.id,
                 type: "person" as const,
                 label: member.name,
@@ -110,7 +126,7 @@ function buildSupportTree(focus: {
           label: focus.teamLabel,
           count: focus.members.length,
           defaultExpanded: true,
-          children: focus.members.map((member) => ({
+          children: sortByRole(focus.members).map((member) => ({
             id: member.id,
             type: "person" as const,
             label: member.name,

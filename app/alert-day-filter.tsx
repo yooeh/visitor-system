@@ -10,7 +10,7 @@ export function AlertDayFilter() {
       <button
         type="button"
         onClick={() => setPeriod("today")}
-        className={`rounded-full px-4 py-1.5 text-body-4 transition ${
+        className={`rounded-full px-4 py-1.5 text-body-3 transition ${
           period === "today"
             ? "bg-gray-900 font-bold text-gray-0"
             : "bg-neutral-30 font-medium text-gray-600"
@@ -21,7 +21,7 @@ export function AlertDayFilter() {
       <button
         type="button"
         onClick={() => setPeriod("yesterday")}
-        className={`rounded-full px-4 py-1.5 text-body-4 transition ${
+        className={`rounded-full px-4 py-1.5 text-body-3 transition ${
           period === "yesterday"
             ? "bg-gray-900 font-bold text-gray-0"
             : "bg-neutral-30 font-medium text-gray-600"

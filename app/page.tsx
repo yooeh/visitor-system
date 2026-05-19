@@ -226,7 +226,7 @@ const alerts = [
 ];
 
 function SidebarIcon({
-  className = "h-4 w-4",
+  className = "h-[18px] w-[18px]",
   name,
 }: {
   className?: string;
@@ -295,12 +295,12 @@ function SectionTitleIcon({ name }: { name: string }) {
 export default function Home() {
   return (
     <div className="min-h-screen bg-neutral-50 text-gray-800">
-      <header className="sticky top-0 z-10 flex h-15 items-center justify-end border-b border-gray-60 bg-gray-0 lg:justify-between">
+      <header className="sticky top-0 z-10 flex h-15 items-center justify-end border-b border-gray-100 bg-gray-0 lg:justify-between">
         <h1 className="hidden shrink-0 whitespace-nowrap px-4 text-heading-1 font-bold text-gray-900 lg:block">
           더존 을지타워 방문객 출입 시스템 관리자
         </h1>
         <div className="flex shrink-0 items-center gap-4 px-3 md:px-4">
-          <span className="text-body-5 font-medium text-gray-600">
+          <span className="text-body-4 font-medium text-gray-600">
             2026.05.18 월요일 14:14
           </span>
           <button className="flex items-center gap-2 rounded-button-compact px-2 py-1 text-gray-600 transition hover:bg-neutral-30">
@@ -311,7 +311,7 @@ export default function Home() {
               src="/avatar-person.svg"
               width={28}
             />
-            <span className="text-body-4 font-bold text-gray-700">김더존</span>
+            <span className="text-body-3 font-bold text-gray-700">김더존</span>
             <svg
               aria-hidden="true"
               className="h-3 w-3 text-gray-500"
@@ -358,11 +358,11 @@ export default function Home() {
         <main className="min-w-0 flex-1">
           <section id="dashboard" className="space-y-4 px-4 pt-4 pb-10 md:px-6 md:pt-6 md:pb-12">
             <div>
-              <div className="mb-3">
+              <div className="mb-3 flex flex-wrap items-baseline gap-x-2 gap-y-0.5">
                 <h2 className="text-heading-1 font-bold text-gray-900">
                   방문 현황
                 </h2>
-                <p className="mt-1 text-body-5 text-gray-500">
+                <p className="text-body-5 text-gray-500">
                   오늘 출입 데이터를 실시간으로 확인합니다.
                 </p>
               </div>
@@ -498,7 +498,7 @@ export default function Home() {
 
               <section className="h-full rounded-[18px] bg-gray-0 p-5 shadow-level-1">
                 <div className="flex items-center justify-between gap-3">
-                  <h2 className="flex items-center gap-2 text-heading-2 font-bold text-gray-900">
+                  <h2 className="flex items-center gap-2 text-heading-1 font-bold text-gray-900">
                     <SectionTitleIcon name="alert" />
                     예외/이슈 발생 알림
                   </h2>
@@ -509,14 +509,14 @@ export default function Home() {
                     <article className="pb-2 last:pb-0" key={alert.title}>
                       <div className="rounded-button border border-gray-60 bg-neutral-30 px-4 py-3">
                         <div className="flex items-center justify-between gap-3">
-                          <p className="text-body-2 font-bold text-gray-900">
+                          <p className="text-body-1 font-bold text-gray-900">
                             {alert.title}
                           </p>
-                          <span className="shrink-0 text-body-5 font-medium text-gray-500">
+                          <span className="shrink-0 text-body-4 font-medium text-gray-500">
                             {index === 0 ? "14:08" : index === 1 ? "13:52" : "13:30"}
                           </span>
                         </div>
-                        <p className="mt-1 text-body-3 leading-[21px] text-gray-600">
+                        <p className="mt-1 text-body-2 leading-[21px] text-gray-600">
                           {alert.description}
                         </p>
                       </div>

@@ -1,0 +1,106 @@
+@import url("https://cdn.jsdelivr.net/gh/orioncactus/pretendard/dist/web/static/pretendard.css");
+@import "tailwindcss";
+
+:root {
+  --background: #f5f6fa;
+  --foreground: #333333;
+  --surface: #ffffff;
+  --surface-muted: #f7f8fa;
+  --primary: #105aff;
+  --primary-foreground: #ffffff;
+  --border: #d3d3d3;
+  --radius-button: 10px;
+  --radius-button-compact: 6px;
+  --radius-input: 8px;
+  --shadow-level-1: 0 2px 4px rgba(0, 0, 0, 0.1);
+  --shadow-level-2: 0 4px 12px rgba(0, 0, 0, 0.1);
+  --shadow-level-3: 4px 8px 20px rgba(0, 0, 0, 0.1);
+}
+
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-surface: var(--surface);
+  --color-surface-muted: var(--surface-muted);
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-border: var(--border);
+
+  --color-blue-50: #eff4ff;
+  --color-blue-60: #e4eefa;
+  --color-blue-70: #d3e7fe;
+  --color-blue-100: #c3d7ff;
+  --color-blue-200: #97baff;
+  --color-blue-300: #719bfc;
+  --color-blue-400: #447cfc;
+  --color-blue-500: #105aff;
+  --color-blue-600: #124ceb;
+  --color-blue-700: #0943c6;
+  --color-blue-800: #002d93;
+  --color-blue-900: #001b65;
+
+  --color-primary-50: #eff4ff;
+  --color-primary-200: #97baff;
+  --color-primary-300: #719bfc;
+  --color-primary-500: #105aff;
+  --color-primary-700: #0943c6;
+
+  --color-gray-0: #ffffff;
+  --color-gray-30: #fcfcfc;
+  --color-gray-40: #fafafa;
+  --color-gray-50: #f4f4f4;
+  --color-gray-60: #ededed;
+  --color-gray-100: #e1e1e1;
+  --color-gray-200: #d3d3d3;
+  --color-gray-300: #c6c6c6;
+  --color-gray-400: #b4b4b4;
+  --color-gray-500: #989898;
+  --color-gray-600: #777777;
+  --color-gray-700: #4a4a4a;
+  --color-gray-800: #333333;
+  --color-gray-900: #222222;
+  --color-gray-1000: #000000;
+
+  --color-neutral-30: #f7f8fa;
+  --color-neutral-50: #f5f6fa;
+  --color-neutral-400: #bfc7d8;
+  --color-neutral-600: #949daf;
+  --color-negative-50: #fdf5f5;
+  --color-negative-400: #fa4553;
+  --color-pending-100: #fff2dc;
+  --color-pending-400: #ffa000;
+  --color-pending-bg: #e4eefa;
+  --color-pending-text: #105aff;
+  --color-positive-50: #f2fffa;
+  --color-positive-500: #27c36f;
+
+  --text-heading-1: 20px;
+  --text-heading-2: 18px;
+  --text-body-1: 16px;
+  --text-body-2: 15px;
+  --text-body-3: 14px;
+  --text-body-4: 13px;
+  --text-body-5: 12px;
+  --text-body-6: 11px;
+  --text-body-7: 10px;
+  --text-body-8: 9px;
+
+  --radius-button: 10px;
+  --radius-button-compact: 6px;
+  --radius-input: 8px;
+
+  --shadow-level-1: 0 2px 4px rgba(0, 0, 0, 0.1);
+  --shadow-level-2: 0 4px 12px rgba(0, 0, 0, 0.1);
+  --shadow-level-3: 4px 8px 20px rgba(0, 0, 0, 0.1);
+
+  --font-sans: "Pretendard", var(--font-geist-sans), sans-serif;
+  --font-mono: var(--font-geist-mono);
+}
+
+body {
+  background: var(--background);
+  color: var(--foreground);
+  font-family: "Pretendard", var(--font-geist-sans), Arial, Helvetica,
+    sans-serif;
+  letter-spacing: -0.5px;
+}

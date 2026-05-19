@@ -1,11 +1,14 @@
 import Image from "next/image";
+import { AlertDayFilter } from "./alert-day-filter";
+import { HostOrgChartTrigger } from "./host-org-chart-modal";
+import { MiniTrendChart } from "./mini-trend-chart";
 
 const menus = [
   { label: "정책/권한 설정", icon: "settings" },
   { label: "방문객 조회 및 수정", icon: "user" },
   { label: "예외 승인/이슈 대응", icon: "alert" },
   { label: "방문객 현황 리포트", icon: "chart" },
-  { label: "방문증 관리", icon: "tools" },
+  { label: "방문증 관리", icon: "passCard" },
 ];
 
 const metrics = [
@@ -16,34 +19,28 @@ const metrics = [
     tone: "bg-blue-50 text-blue-500 ring-blue-100",
   },
   {
-    label: "방문 중",
-    value: "42",
-    change: "12.4%",
-    tone: "bg-positive-50 text-positive-500 ring-positive-500/20",
-  },
-  {
-    label: "방문 종료",
-    value: "76",
-    change: "완료율 59%",
-    tone: "bg-gray-50 text-gray-700 ring-gray-200",
-  },
-  {
-    label: "승인대기",
-    value: "17",
-    change: "",
-    tone: "bg-pending-bg text-pending-text ring-blue-60",
-  },
-  {
     label: "현장등록",
     value: "9",
     change: "",
     tone: "bg-pending-bg text-pending-text ring-blue-60",
   },
   {
-    label: "이슈 알림",
-    value: "4",
+    label: "승인필요",
+    value: "17",
     change: "",
-    tone: "bg-negative-50 text-negative-400 ring-negative-400/20",
+    tone: "bg-pending-bg text-pending-text ring-blue-60",
+  },
+  {
+    label: "방문 중",
+    value: "42",
+    change: "",
+    tone: "bg-positive-50 text-positive-500 ring-positive-500/20",
+  },
+  {
+    label: "방문 종료",
+    value: "76",
+    change: "",
+    tone: "bg-gray-50 text-gray-700 ring-gray-200",
   },
 ];
 
@@ -69,24 +66,14 @@ const recentVisitors = [
     status: "방문 중",
   },
   {
-    name: "최유나",
-    company: "을지타워 시설관리",
-    host: "총무팀 정하린",
-    purpose: "시설 점검",
-    time: "13:31",
-    exitTime: "14:18",
-    badge: "B-0135",
-    status: "임시 등록",
-  },
-  {
     name: "이도윤",
     company: "회계법인 한결",
     host: "재무팀 강도현",
     purpose: "감사 자료 확인",
     time: "13:14",
-    exitTime: "14:05",
+    exitTime: "-",
     badge: "B-0130",
-    status: "승인 확인",
+    status: "출입 완료",
   },
   {
     name: "한서준",
@@ -134,9 +121,9 @@ const recentVisitors = [
     host: "재무팀 강도현",
     purpose: "자료 전달",
     time: "11:31",
-    exitTime: "12:20",
+    exitTime: "-",
     badge: "B-0114",
-    status: "승인 확인",
+    status: "출입 완료",
   },
   {
     name: "임도겸",
@@ -159,24 +146,14 @@ const recentVisitors = [
     status: "방문 중",
   },
   {
-    name: "배준호",
-    company: "을지타워 시설관리",
-    host: "총무팀 정하린",
-    purpose: "시설 보수",
-    time: "10:22",
-    exitTime: "11:35",
-    badge: "B-0102",
-    status: "임시 등록",
-  },
-  {
     name: "유나겸",
     company: "데이터링크",
     host: "데이터사업팀 이지후",
     purpose: "데이터 연동",
     time: "10:05",
-    exitTime: "11:18",
+    exitTime: "-",
     badge: "B-0098",
-    status: "승인 확인",
+    status: "출입 완료",
   },
   {
     name: "차은우",
@@ -189,46 +166,46 @@ const recentVisitors = [
     status: "출입 완료",
   },
   {
-    name: "송예린",
-    company: "디지털 인증원",
-    host: "인증사업팀 한유진",
-    purpose: "인증 심사",
-    time: "09:18",
+    name: "조은비",
+    company: "넥스트솔루션",
+    host: "플랫폼사업부 이서연",
+    purpose: "제휴 미팅",
+    time: "09:28",
     exitTime: "-",
-    badge: "B-0089",
-    status: "반려",
+    badge: "B-0091",
+    status: "방문 중",
+  },
+  {
+    name: "배시온",
+    company: "디지털웍스",
+    host: "서비스기획팀 윤지아",
+    purpose: "기능 검토",
+    time: "09:12",
+    exitTime: "-",
+    badge: "B-0088",
+    status: "방문 중",
+  },
+  {
+    name: "한지민",
+    company: "스마트시스템",
+    host: "클라우드사업부 김도윤",
+    purpose: "인프라 협의",
+    time: "08:55",
+    exitTime: "-",
+    badge: "B-0085",
+    status: "방문 중",
   },
 ];
 
 const statusTones: Record<string, string> = {
   "출입 완료": "bg-blue-50 text-blue-500",
   "방문 중": "bg-positive-50 text-positive-500",
-  "임시 등록": "bg-pending-100 text-pending-400",
-  "승인 확인": "bg-gray-50 text-gray-600",
-  "반려": "bg-negative-50 text-negative-400",
+  "방문 종료": "bg-gray-50 text-gray-700",
 };
 
-const metricInlineLabelTones: Record<string, string> = {
-  "방문 중": "bg-positive-50 text-positive-500 ring-positive-500/20",
-  "방문 종료": "bg-blue-50 text-blue-500 ring-blue-100",
-};
-
-const trend = [
-  { day: "월", visits: 82 },
-  { day: "화", visits: 96 },
-  { day: "수", visits: 71 },
-  { day: "목", visits: 100 },
-  { day: "금", visits: 88 },
-  { day: "토", visits: 32 },
-  { day: "일", visits: 18 },
-];
-
-const shortcuts = [
-  "방문 예약 등록",
-  "임시 출입증 발급",
-  "승인 대기 검토",
-  "방문증 반납 확인",
-];
+function getVisitorDisplayStatus(visitor: (typeof recentVisitors)[number]) {
+  return visitor.exitTime !== "-" ? "방문 종료" : visitor.status;
+}
 
 const alerts = [
   {
@@ -314,143 +291,48 @@ function SectionTitleIcon({ name }: { name: string }) {
   );
 }
 
-function MiniTrendChart() {
-  const yTicks = [0, 20, 40, 60, 80, 100];
-  const getX = (index: number) => 60 + index * 116;
-  const chartViewBoxHeight = 180;
-  const chartBottom = 170;
-  const chartScale = 130;
-  const points = trend
-    .map((item, index) => {
-      const x = getX(index);
-      const y = chartBottom - (Math.min(item.visits, 100) / 100) * chartScale;
-      return `${x},${y}`;
-    })
-    .join(" ");
-
-  return (
-    <div className="h-full rounded-[18px] bg-gray-0 p-5 shadow-level-1">
-      <div className="flex items-start justify-between gap-4">
-        <div>
-          <h2 className="flex items-center gap-2 text-heading-2 font-bold text-gray-900">
-            <SectionTitleIcon name="chart" />
-            최근 7일 추이
-          </h2>
-          <p className="mt-1 text-body-5 font-medium text-gray-600">
-            일 평균 방문 <span className="font-bold text-blue-500">101</span>건
-          </p>
-        </div>
-        <span className="mt-6 rounded-button-compact bg-positive-50 px-3 py-1 text-body-5 font-bold leading-[18px] text-positive-500">
-          전주 대비 +8.2%
-        </span>
-      </div>
-      <div className="mt-1 overflow-hidden rounded-[14px] bg-neutral-30 px-4 pt-4 pb-6">
-        <div className="relative">
-          <svg
-            className="h-[167px] w-full"
-            preserveAspectRatio="none"
-            role="img"
-            viewBox="0 0 800 180"
-          >
-            <title>최근 7일 방문 추이 그래프</title>
-            {yTicks.map((tick) => {
-              const y = chartBottom - (tick / 100) * chartScale;
-              return (
-                <g key={tick}>
-                  <line
-                    stroke="#EDEDED"
-                    strokeWidth="1"
-                  x1="60"
-                    x2="760"
-                    y1={y}
-                    y2={y}
-                  />
-                </g>
-              );
-            })}
-            {trend.map((item, index) => {
-              const x = getX(index);
-              const y = chartBottom - (Math.min(item.visits, 100) / 100) * chartScale;
-              return (
-                <rect
-                  fill="#97BAFF"
-                  height={chartBottom - y}
-                  key={`bar-${item.day}`}
-                  opacity="0.65"
-                  rx="6"
-                  width="22"
-                  x={x - 11}
-                  y={y}
-                />
-              );
-            })}
-            <polyline
-              fill="none"
-              points={points}
-              stroke="#105AFF"
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              strokeWidth="1"
-            />
-          </svg>
-          {yTicks.map((tick) => {
-            const y = chartBottom - (tick / 100) * chartScale;
-            return (
-              <span
-                className="pointer-events-none absolute left-0 w-5 -translate-y-1/2 text-right text-[10px] font-semibold leading-none text-gray-500"
-                key={`tick-${tick}`}
-                style={{ top: `${(y / chartViewBoxHeight) * 100}%` }}
-              >
-                {tick}
-              </span>
-            );
-          })}
-          {trend.map((item, index) => {
-            const x = getX(index);
-            const y = chartBottom - (Math.min(item.visits, 100) / 100) * chartScale;
-            return (
-              <span
-                className="absolute h-2.5 w-2.5 -translate-x-1/2 -translate-y-1/2 rounded-full border-[3px] border-blue-500 bg-gray-0"
-                key={`dot-${item.day}`}
-                style={{
-                  left: `${(x / 800) * 100}%`,
-                  top: `${(y / chartViewBoxHeight) * 100}%`,
-                }}
-              />
-            );
-          })}
-        </div>
-        <div className="relative -mt-[6px] h-6 text-[14px] font-medium leading-6 text-gray-600">
-          {trend.map((item, index) => (
-            <span
-              className="absolute top-0 -translate-x-1/2"
-              key={item.day}
-              style={{ left: `${(getX(index) / 800) * 100}%` }}
-            >
-              {item.day}
-            </span>
-          ))}
-        </div>
-      </div>
-    </div>
-  );
-}
 
 export default function Home() {
   return (
     <div className="min-h-screen bg-neutral-50 text-gray-800">
-      <div className="flex min-h-screen">
-        <aside className="sticky top-0 hidden h-screen w-56 shrink-0 bg-gray-0 after:absolute after:right-0 after:top-15 after:bottom-0 after:w-px after:bg-gray-100 lg:block">
-          <div className="flex h-15 items-center border-b border-gray-60 px-5">
+      <header className="sticky top-0 z-10 flex h-15 items-center justify-end border-b border-gray-60 bg-gray-0 lg:justify-between">
+        <h1 className="hidden shrink-0 whitespace-nowrap px-4 text-heading-1 font-bold text-gray-900 lg:block">
+          더존 을지타워 방문객 출입 시스템 관리자
+        </h1>
+        <div className="flex shrink-0 items-center gap-4 px-3 md:px-4">
+          <span className="text-body-5 font-medium text-gray-600">
+            2026.05.18 월요일 14:14
+          </span>
+          <button className="flex items-center gap-2 rounded-button-compact px-2 py-1 text-gray-600 transition hover:bg-neutral-30">
             <Image
-              alt="더존 로고"
-              className="h-6 w-auto object-contain"
-              height={24}
-              src="/douzone-logo.png"
-              width={143}
+              alt=""
+              className="h-7 w-7 rounded-full"
+              height={28}
+              src="/avatar-person.svg"
+              width={28}
             />
-          </div>
-          <nav className="flex flex-col gap-2 px-3 py-4 lg:mt-[60px]">
+            <span className="text-body-5 font-bold text-gray-700">김더존</span>
+            <svg
+              aria-hidden="true"
+              className="h-3 w-3 text-gray-500"
+              fill="none"
+              viewBox="0 0 12 12"
+            >
+              <path
+                d="M3 4.5 6 7.5 9 4.5"
+                stroke="currentColor"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                strokeWidth="1.5"
+              />
+            </svg>
+          </button>
+        </div>
+      </header>
+
+      <div className="flex min-h-[calc(100vh-3.75rem)]">
+        <aside className="sticky top-15 hidden h-[calc(100vh-3.75rem)] w-56 shrink-0 bg-gray-0 after:absolute after:right-0 after:top-0 after:bottom-0 after:w-px after:bg-gray-100 lg:block">
+          <nav className="flex flex-col gap-2 px-3 pb-4 pt-4 md:pt-6">
             <a
               className="flex h-10 items-center gap-2 rounded-button-compact bg-blue-50 px-3 text-body-1 font-bold text-blue-500"
               href="#dashboard"
@@ -471,112 +353,9 @@ export default function Home() {
               ))}
             </div>
           </nav>
-          <div className="mx-3 mt-2 rounded-button border border-gray-100 bg-neutral-30 p-3">
-            <p className="text-body-5 font-bold text-gray-800">로비 운영 상태</p>
-            <p className="mt-1 text-body-5 leading-[18px] text-gray-600">
-              게이트 4대 정상 운영
-              <br />
-              평균 응답 1분 12초
-            </p>
-          </div>
         </aside>
 
-        <main className="flex min-w-0 flex-1 flex-col">
-          <header className="sticky top-0 z-10 bg-gray-0">
-            <div className="flex h-15 items-center justify-between border-b border-gray-60 px-3 md:px-4">
-              <div />
-              <div className="flex items-center gap-3 text-gray-600">
-                <button
-                  aria-label="검색"
-                  className="flex h-8 w-8 items-center justify-center rounded-button-compact transition hover:bg-neutral-30"
-                >
-                  <svg
-                    aria-hidden="true"
-                    className="h-4 w-4"
-                    fill="none"
-                    viewBox="0 0 24 24"
-                  >
-                    <path
-                      d="M10.5 18a7.5 7.5 0 1 1 5.3-2.2L20 20"
-                      stroke="currentColor"
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      strokeWidth="2"
-                    />
-                  </svg>
-                </button>
-                <button
-                  aria-label="알림"
-                  className="relative flex h-8 w-8 items-center justify-center rounded-button-compact transition hover:bg-neutral-30"
-                >
-                  <svg
-                    aria-hidden="true"
-                    className="h-4 w-4"
-                    fill="none"
-                    viewBox="0 0 24 24"
-                  >
-                    <path
-                      d="M18 9a6 6 0 0 0-12 0c0 7-3 7-3 7h18s-3 0-3-7"
-                      stroke="currentColor"
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      strokeWidth="2"
-                    />
-                    <path
-                      d="M13.7 21a2 2 0 0 1-3.4 0"
-                      stroke="currentColor"
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      strokeWidth="2"
-                    />
-                  </svg>
-                  <span className="absolute right-1.5 top-1.5 h-1.5 w-1.5 rounded-full bg-negative-400" />
-                </button>
-                <button className="flex items-center gap-2 rounded-button-compact px-2 py-1 transition hover:bg-neutral-30">
-                  <Image
-                    alt=""
-                    className="h-7 w-7 rounded-full"
-                    height={28}
-                    src="/avatar-person.svg"
-                    width={28}
-                  />
-                  <span className="text-body-5 font-bold text-gray-700">
-                    김더존
-                  </span>
-                  <svg
-                    aria-hidden="true"
-                    className="h-3 w-3 text-gray-500"
-                    fill="none"
-                    viewBox="0 0 12 12"
-                  >
-                    <path
-                      d="M3 4.5 6 7.5 9 4.5"
-                      stroke="currentColor"
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      strokeWidth="1.5"
-                    />
-                  </svg>
-                </button>
-              </div>
-            </div>
-            <div className="flex min-h-12 flex-col gap-3 border-b border-gray-100 bg-gray-0 px-3 py-3 md:px-4 lg:-ml-56 lg:w-[calc(100%+14rem)] lg:flex-row lg:items-center lg:justify-between">
-              <div className="flex items-center gap-2">
-                <h1 className="text-heading-1 font-bold text-gray-900">
-                  더존 을지타워 내방고객 출입 관리자
-                </h1>
-              </div>
-              <div className="flex flex-wrap items-center gap-2">
-                <div className="rounded-button border border-gray-100 bg-neutral-30 px-3 py-2 text-body-5 font-medium text-gray-600">
-                  2026.05.18 월요일 14:14
-                </div>
-                <button className="rounded-button bg-blue-500 px-4 py-2 text-body-4 font-bold text-gray-0 shadow-level-1 transition hover:bg-blue-700">
-                  방문 등록
-                </button>
-              </div>
-            </div>
-          </header>
-
+        <main className="min-w-0 flex-1">
           <section id="dashboard" className="space-y-4 px-4 pt-4 pb-10 md:px-6 md:pt-6 md:pb-12">
             <div>
               <div className="mb-3">
@@ -588,17 +367,17 @@ export default function Home() {
                 </p>
               </div>
               <section className="rounded-[18px] bg-gray-0 p-3 shadow-level-1">
-                <div className="grid gap-3 sm:grid-cols-2 xl:grid-cols-3">
+                <div className="grid gap-3 grid-cols-1 sm:grid-cols-2 lg:grid-cols-5">
                   {metrics.map((metric) => (
                     <article
-                      className="rounded-button bg-neutral-30 px-4 py-2"
+                      className="rounded-button bg-neutral-30 px-4 py-[13px]"
                       key={metric.label}
                     >
                       <div className="flex items-start justify-between gap-3">
                         <p className="text-body-3 font-medium text-gray-600">
                           {metric.label}
                         </p>
-                        {metric.change && !["방문 중", "방문 종료"].includes(metric.label) ? (
+                        {metric.change ? (
                           <span
                             className={`rounded-button-compact px-3 py-1 text-body-5 font-bold ring-1 ${metric.tone}`}
                           >
@@ -607,16 +386,6 @@ export default function Home() {
                         ) : null}
                       </div>
                       <p className="mt-1 flex items-baseline justify-end gap-1.5 text-right text-[28px] leading-[32px] font-bold text-gray-900">
-                        {metric.change &&
-                        ["방문 중", "방문 종료"].includes(metric.label) ? (
-                          <span
-                            className={`self-center rounded-button-compact px-2 py-0.5 text-body-5 font-bold leading-[18px] ring-1 ${
-                              metricInlineLabelTones[metric.label]
-                            }`}
-                          >
-                            {metric.change}
-                          </span>
-                        ) : null}
                         {metric.value}
                         <span className="ml-0.5 -translate-y-px align-baseline text-body-1 font-bold leading-none text-gray-400">
                           건
@@ -631,12 +400,16 @@ export default function Home() {
             <div className="grid gap-6">
               <section className="rounded-[18px] bg-gray-0 p-4 shadow-level-1">
                 <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
-                  <div>
+                  <div className="flex items-center gap-1.5">
                     <h2 className="flex items-center gap-2 text-heading-2 font-bold text-gray-900">
                       <SectionTitleIcon name="user" />
                       최근 도착 방문객
                     </h2>
-                    <p className="mt-1 text-body-5 font-medium text-gray-600">
+                    <span
+                      aria-hidden="true"
+                      className="h-5 w-px bg-gray-100"
+                    />
+                    <p className="text-heading-2 font-medium text-gray-600">
                       전체 <span className="font-bold text-blue-500">126</span>
                     </p>
                   </div>
@@ -656,7 +429,7 @@ export default function Home() {
                   </div>
                 </div>
                 <div className="mt-2 overflow-hidden rounded-button border border-gray-100">
-                  <div className="hidden grid-cols-[0.7fr_1fr_0.9fr_1fr_0.55fr_0.55fr_0.7fr] border-b border-gray-100 bg-neutral-30 px-4 py-2 text-body-5 font-bold uppercase tracking-wide text-gray-600 md:grid">
+                  <div className="hidden grid-cols-[1fr_0.85fr_0.85fr_1.3fr_0.55fr_0.55fr_0.7fr] border-b border-gray-100 bg-neutral-30 px-4 py-2 text-body-5 font-bold uppercase tracking-wide text-gray-600 md:grid">
                     <span>방문객</span>
                     <span>회사</span>
                     <span>방문 목적</span>
@@ -666,14 +439,20 @@ export default function Home() {
                     <span className="pl-3">상태</span>
                   </div>
                   <div className="h-[260px] divide-y divide-gray-60 overflow-y-scroll overscroll-contain [scrollbar-gutter:stable]">
-                    {recentVisitors.map((visitor) => (
+                    {recentVisitors.map((visitor) => {
+                      const displayStatus = getVisitorDisplayStatus(visitor);
+
+                      return (
                       <article
-                        className="grid gap-3 px-4 py-3 transition hover:bg-neutral-30 md:grid-cols-[0.7fr_1fr_0.9fr_1fr_0.55fr_0.55fr_0.7fr] md:items-center"
+                        className="grid gap-3 px-4 py-3 transition hover:bg-neutral-30 md:grid-cols-[1fr_0.85fr_0.85fr_1.3fr_0.55fr_0.55fr_0.7fr] md:items-center"
                         key={`${visitor.name}-${visitor.time}`}
                       >
                         <div>
                           <p className="text-body-2 font-bold text-gray-900">
                             {visitor.name}
+                            <span className="ml-2 text-body-3 font-medium text-gray-500">
+                              {visitor.badge}
+                            </span>
                           </p>
                         </div>
                         <p className="text-body-3 font-medium text-gray-700">
@@ -690,28 +469,24 @@ export default function Home() {
                             src="/avatar-person.svg"
                             width={28}
                           />
-                          <span className="cursor-pointer hover:underline">
-                            {visitor.host}
-                          </span>
+                          <HostOrgChartTrigger host={visitor.host} />
                         </div>
                         <p className="text-body-3 font-bold text-gray-900">
                           {visitor.time}
-                          <span className="ml-2 text-gray-500">
-                            {visitor.badge}
-                          </span>
                         </p>
                         <p className="text-body-3 font-bold text-gray-900">
                           {visitor.exitTime}
                         </p>
                         <span
                           className={`w-fit rounded-button-compact px-3 py-1 text-body-5 font-bold ${
-                            statusTones[visitor.status]
+                            statusTones[displayStatus]
                           }`}
                         >
-                          {visitor.status}
+                          {displayStatus}
                         </span>
                       </article>
-                    ))}
+                      );
+                    })}
                   </div>
                 </div>
               </section>
@@ -722,26 +497,19 @@ export default function Home() {
               <MiniTrendChart />
 
               <section className="h-full rounded-[18px] bg-gray-0 p-5 shadow-level-1">
-                <h2 className="flex items-center gap-2 text-heading-2 font-bold text-gray-900">
-                  <SectionTitleIcon name="alert" />
-                  예외/이슈 발생 알림
-                </h2>
+                <div className="flex items-center justify-between gap-3">
+                  <h2 className="flex items-center gap-2 text-heading-2 font-bold text-gray-900">
+                    <SectionTitleIcon name="alert" />
+                    예외/이슈 발생 알림
+                  </h2>
+                  <AlertDayFilter />
+                </div>
                 <div className="mt-5 space-y-0">
                   {alerts.map((alert, index) => (
-                    <article className="relative flex gap-3 pb-2 last:pb-0" key={alert.title}>
-                      <div className="flex flex-col items-center">
-                        <span
-                          className={`mt-1 h-2.5 w-2.5 rounded-full ${
-                            index === 1 ? "bg-negative-400" : "bg-blue-500"
-                          }`}
-                        />
-                        {index < alerts.length - 1 ? (
-                          <span className="mt-1 h-full w-px flex-1 bg-gray-100" />
-                        ) : null}
-                      </div>
-                      <div className="min-w-0 flex-1 rounded-button border border-gray-60 bg-neutral-30 px-4 py-3">
+                    <article className="pb-2 last:pb-0" key={alert.title}>
+                      <div className="rounded-button border border-gray-60 bg-neutral-30 px-4 py-3">
                         <div className="flex items-center justify-between gap-3">
-                          <p className="text-body-3 font-bold text-gray-900">
+                          <p className="text-body-2 font-bold text-gray-900">
                             {alert.title}
                           </p>
                           <span className="shrink-0 text-body-5 font-medium text-gray-500">
@@ -758,29 +526,6 @@ export default function Home() {
               </section>
             </div>
 
-            <section className="rounded-[18px] bg-gray-0 p-5 shadow-level-1">
-              <div className="flex items-center justify-between gap-4">
-                <div>
-                  <h2 className="flex items-center gap-2 text-heading-2 font-bold text-gray-900">
-                    <SectionTitleIcon name="grid" />
-                    자주쓰는 메뉴
-                  </h2>
-                </div>
-                <button className="rounded-button-compact border border-blue-500 px-3 py-1.5 text-body-5 font-bold text-blue-500 transition hover:bg-blue-50">
-                  + 추가하기
-                </button>
-              </div>
-              <div className="mt-5 grid gap-3 sm:grid-cols-2 lg:grid-cols-4">
-                {shortcuts.map((shortcut) => (
-                  <button
-                    className="rounded-button border border-gray-100 bg-gray-0 px-4 py-4 text-left text-body-3 font-bold text-gray-800 transition hover:border-blue-500 hover:bg-blue-50 hover:text-blue-500"
-                    key={shortcut}
-                  >
-                    {shortcut}
-                  </button>
-                ))}
-              </div>
-            </section>
           </section>
         </main>
       </div>

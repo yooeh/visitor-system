@@ -311,7 +311,7 @@ export default function Home() {
               src="/avatar-person.svg"
               width={28}
             />
-            <span className="text-body-5 font-bold text-gray-700">김더존</span>
+            <span className="text-body-4 font-bold text-gray-700">김더존</span>
             <svg
               aria-hidden="true"
               className="h-3 w-3 text-gray-500"
@@ -387,7 +387,7 @@ export default function Home() {
                       </div>
                       <p className="mt-1 flex items-baseline justify-end gap-1.5 text-right text-[28px] leading-[32px] font-bold text-gray-900">
                         {metric.value}
-                        <span className="ml-0.5 -translate-y-px align-baseline text-body-1 font-bold leading-none text-gray-400">
+                        <span className="ml-0.5 -translate-y-px align-baseline text-body-1 font-medium leading-none text-gray-400">
                           건
                         </span>
                       </p>
@@ -407,7 +407,7 @@ export default function Home() {
                     </h2>
                     <span
                       aria-hidden="true"
-                      className="h-5 w-px bg-gray-100"
+                      className="mx-0.5 h-4 w-px shrink-0 bg-gray-100"
                     />
                     <p className="text-heading-2 font-medium text-gray-600">
                       전체 <span className="font-bold text-blue-500">126</span>
@@ -448,9 +448,9 @@ export default function Home() {
                         key={`${visitor.name}-${visitor.time}`}
                       >
                         <div>
-                          <p className="text-body-2 font-bold text-gray-900">
+                          <p className="text-body-3 font-bold text-gray-900">
                             {visitor.name}
-                            <span className="ml-2 text-body-3 font-medium text-gray-500">
+                            <span className="ml-2 font-medium text-gray-500">
                               {visitor.badge}
                             </span>
                           </p>

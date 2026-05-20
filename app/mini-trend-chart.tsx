@@ -14,12 +14,8 @@ const trend = [
 
 const BAR_DURATION_MS = 720;
 const BAR_STAGGER_MS = 110;
-const DOT_DELAY_AFTER_BARS_MS = 200;
-const LINE_DELAY_AFTER_BARS_MS = 550;
 const LINE_DRAW_MS = 950;
 const DOT_STAGGER_MS = 85;
-const BARS_TOTAL_MS =
-  BAR_DURATION_MS + (trend.length - 1) * BAR_STAGGER_MS;
 
 function ChartTitleIcon() {
   return (
@@ -46,8 +42,6 @@ export function MiniTrendChart() {
   const chartRef = useRef<HTMLDivElement>(null);
   const polylineRef = useRef<SVGPolylineElement>(null);
   const [inView, setInView] = useState(false);
-  const [showDots, setShowDots] = useState(false);
-  const [showLine, setShowLine] = useState(false);
   const [lineLength, setLineLength] = useState(0);
 
   const yTicks = [0, 20, 40, 60, 80, 100];
@@ -72,18 +66,7 @@ export function MiniTrendChart() {
       ([entry]) => {
         if (!entry.isIntersecting) return;
 
-        const reducedMotion = window.matchMedia(
-          "(prefers-reduced-motion: reduce)",
-        ).matches;
-
-        if (reducedMotion) {
-          setInView(true);
-          setShowDots(true);
-          setShowLine(true);
-        } else {
-          setInView(true);
-        }
-
+        setInView(true);
         observer.disconnect();
       },
       { threshold: 0.25 },
@@ -95,35 +78,12 @@ export function MiniTrendChart() {
 
   useEffect(() => {
     if (!inView) return;
-
-    const reducedMotion = window.matchMedia(
-      "(prefers-reduced-motion: reduce)",
-    ).matches;
-    if (reducedMotion) return;
-
-    const dotsTimer = window.setTimeout(
-      () => setShowDots(true),
-      BARS_TOTAL_MS + DOT_DELAY_AFTER_BARS_MS,
-    );
-    const lineTimer = window.setTimeout(
-      () => setShowLine(true),
-      BARS_TOTAL_MS + LINE_DELAY_AFTER_BARS_MS,
-    );
-
-    return () => {
-      window.clearTimeout(dotsTimer);
-      window.clearTimeout(lineTimer);
-    };
-  }, [inView]);
-
-  useEffect(() => {
-    if (!showLine) return;
     requestAnimationFrame(() => {
       if (polylineRef.current) {
         setLineLength(polylineRef.current.getTotalLength());
       }
     });
-  }, [showLine]);
+  }, [inView]);
 
   return (
     <div className="h-full rounded-[18px] bg-gray-0 p-5 shadow-level-1">
@@ -201,9 +161,9 @@ export function MiniTrendChart() {
               strokeLinejoin="round"
               strokeWidth="1"
               style={{
-                opacity: showLine ? 1 : 0,
+                opacity: inView ? 1 : 0,
                 strokeDasharray: lineLength || undefined,
-                strokeDashoffset: showLine ? 0 : lineLength,
+                strokeDashoffset: inView ? 0 : lineLength,
                 transition:
                   lineLength > 0
                     ? `stroke-dashoffset ${LINE_DRAW_MS}ms ease-out, opacity 250ms ease-out`
@@ -235,9 +195,9 @@ export function MiniTrendChart() {
                 style={{
                   left: `${(x / 800) * 100}%`,
                   top: `${(y / chartViewBoxHeight) * 100}%`,
-                  opacity: showDots ? 1 : 0,
-                  transform: `translate(-50%, -50%) scale(${showDots ? 1 : 0})`,
-                  transitionDelay: showDots ? `${index * DOT_STAGGER_MS}ms` : "0ms",
+                  opacity: inView ? 1 : 0,
+                  transform: `translate(-50%, -50%) scale(${inView ? 1 : 0})`,
+                  transitionDelay: inView ? `${index * DOT_STAGGER_MS}ms` : "0ms",
                 }}
               />
             );

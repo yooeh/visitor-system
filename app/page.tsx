@@ -1,5 +1,6 @@
 import Image from "next/image";
 import { AlertDayFilter } from "./alert-day-filter";
+import { DashboardReveal } from "./dashboard-reveal";
 import { HostOrgChartTrigger } from "./host-org-chart-modal";
 import { MiniTrendChart } from "./mini-trend-chart";
 
@@ -357,47 +358,50 @@ export default function Home() {
 
         <main className="min-w-0 flex-1">
           <section id="dashboard" className="space-y-4 px-4 pt-4 pb-10 md:px-6 md:pt-6 md:pb-12">
-            <div>
-              <div className="mb-3 flex flex-wrap items-baseline gap-x-2 gap-y-0.5">
-                <h2 className="text-heading-1 font-bold text-gray-900">
-                  방문 현황
-                </h2>
-                <p className="text-body-5 text-gray-500">
-                  오늘 출입 데이터를 실시간으로 확인합니다.
-                </p>
-              </div>
-              <section className="rounded-[18px] bg-gray-0 p-3 shadow-level-1">
-                <div className="grid gap-3 grid-cols-1 sm:grid-cols-2 lg:grid-cols-5">
-                  {metrics.map((metric) => (
-                    <article
-                      className="rounded-button bg-neutral-30 px-4 py-[13px]"
-                      key={metric.label}
-                    >
-                      <div className="flex items-start justify-between gap-3">
-                        <p className="text-body-3 font-medium text-gray-600">
-                          {metric.label}
-                        </p>
-                        {metric.change ? (
-                          <span
-                            className={`rounded-button-compact px-3 py-1 text-body-5 font-bold ring-1 ${metric.tone}`}
-                          >
-                            {metric.change}
-                          </span>
-                        ) : null}
-                      </div>
-                      <p className="mt-1 flex items-baseline justify-end gap-1.5 text-right text-[28px] leading-[32px] font-bold text-gray-900">
-                        {metric.value}
-                        <span className="ml-0.5 -translate-y-px align-baseline text-body-1 font-medium leading-none text-gray-400">
-                          건
-                        </span>
-                      </p>
-                    </article>
-                  ))}
+            <DashboardReveal delayMs={0}>
+              <div>
+                <div className="mb-3 flex flex-wrap items-baseline gap-x-2 gap-y-0.5">
+                  <h2 className="text-heading-1 font-bold text-gray-900">
+                    방문 현황
+                  </h2>
+                  <p className="text-body-5 text-gray-500">
+                    오늘 출입 데이터를 실시간으로 확인합니다.
+                  </p>
                 </div>
-              </section>
-            </div>
+                <section className="rounded-[18px] bg-gray-0 p-3 shadow-level-1">
+                  <div className="grid gap-3 grid-cols-1 sm:grid-cols-2 lg:grid-cols-5">
+                    {metrics.map((metric) => (
+                      <article
+                        className="rounded-button bg-neutral-30 px-4 py-[13px]"
+                        key={metric.label}
+                      >
+                        <div className="flex items-start justify-between gap-3">
+                          <p className="text-body-3 font-medium text-gray-600">
+                            {metric.label}
+                          </p>
+                          {metric.change ? (
+                            <span
+                              className={`rounded-button-compact px-3 py-1 text-body-5 font-bold ring-1 ${metric.tone}`}
+                            >
+                              {metric.change}
+                            </span>
+                          ) : null}
+                        </div>
+                        <p className="mt-1 flex items-baseline justify-end gap-1.5 text-right text-[28px] leading-[32px] font-bold text-gray-900">
+                          {metric.value}
+                          <span className="ml-0.5 -translate-y-px align-baseline text-body-1 font-medium leading-none text-gray-400">
+                            건
+                          </span>
+                        </p>
+                      </article>
+                    ))}
+                  </div>
+                </section>
+              </div>
+            </DashboardReveal>
 
-            <div className="grid gap-6">
+            <DashboardReveal delayMs={120}>
+              <div className="grid gap-6">
               <section className="rounded-[18px] bg-gray-0 p-4 shadow-level-1">
                 <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
                   <div className="flex items-center gap-1.5">
@@ -491,8 +495,10 @@ export default function Home() {
                 </div>
               </section>
 
-            </div>
+              </div>
+            </DashboardReveal>
 
+            <DashboardReveal delayMs={240}>
             <div className="grid gap-4 xl:grid-cols-[1fr_0.9fr]">
               <MiniTrendChart />
 
@@ -525,6 +531,7 @@ export default function Home() {
                 </div>
               </section>
             </div>
+            </DashboardReveal>
 
           </section>
         </main>

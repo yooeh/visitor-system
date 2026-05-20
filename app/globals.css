@@ -108,7 +108,7 @@ body {
 @keyframes dashboard-reveal {
   from {
     opacity: 0;
-    transform: translateY(12px);
+    transform: translateY(8px);
   }
 
   to {
@@ -118,7 +118,8 @@ body {
 }
 
 .animate-dashboard-reveal {
-  animation: dashboard-reveal 190ms ease-out var(--reveal-delay, 0ms) both;
+  animation: dashboard-reveal 520ms cubic-bezier(0.22, 1, 0.36, 1)
+    var(--reveal-delay, 0ms) both;
 }
 
 @media (prefers-reduced-motion: reduce) {

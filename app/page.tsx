@@ -400,7 +400,7 @@ export default function Home() {
               </div>
             </DashboardReveal>
 
-            <DashboardReveal delayMs={120}>
+            <DashboardReveal delayMs={150}>
               <div className="grid gap-6">
               <section className="rounded-[18px] bg-gray-0 p-4 shadow-level-1">
                 <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
@@ -498,7 +498,7 @@ export default function Home() {
               </div>
             </DashboardReveal>
 
-            <DashboardReveal delayMs={240}>
+            <DashboardReveal delayMs={300}>
             <div className="grid gap-4 xl:grid-cols-[1fr_0.9fr]">
               <MiniTrendChart />
 

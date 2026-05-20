@@ -2,6 +2,7 @@
 
 import Image from "next/image";
 import { useCallback, useEffect, useMemo, useState } from "react";
+import { createPortal } from "react-dom";
 import {
   collectExpandedIds,
   getOrgTreeForHost,
@@ -184,9 +185,9 @@ export function HostOrgChartModal({ host, open, onClose }: HostOrgChartModalProp
 
   if (!open) return null;
 
-  return (
+  return createPortal(
     <div
-      className="fixed inset-0 z-50 flex items-center justify-center bg-gray-900/50 p-4"
+      className="fixed inset-0 z-[100] flex items-center justify-center bg-transparent p-4"
       onClick={onClose}
       role="presentation"
     >
@@ -240,7 +241,8 @@ export function HostOrgChartModal({ host, open, onClose }: HostOrgChartModalProp
           </button>
         </div>
       </div>
-    </div>
+    </div>,
+    document.body,
   );
 }
 

@@ -74,6 +74,26 @@
   --color-positive-50: #f2fffa;
   --color-positive-500: #27c36f;
 
+  --color-metric-blue-bg: #eff4ff;
+  --color-metric-blue-border: #97baff;
+  --color-metric-blue-accent: #316bb2;
+
+  --color-metric-purple-bg: #f3efff;
+  --color-metric-purple-border: #c7b6ff;
+  --color-metric-purple-accent: #7d57e0;
+
+  --color-metric-coral-bg: #fff1f1;
+  --color-metric-coral-border: #ffc9c9;
+  --color-metric-coral-accent: #dd6160;
+
+  --color-metric-teal-bg: #e9f9f6;
+  --color-metric-teal-border: #9de6d8;
+  --color-metric-teal-accent: #2d9898;
+
+  --color-metric-gray-bg: #f7f8fa;
+  --color-metric-gray-border: #bfc7d8;
+  --color-metric-gray-accent: #6b7793;
+
   --text-heading-1: 20px;
   --text-heading-2: 18px;
   --text-body-1: 16px;

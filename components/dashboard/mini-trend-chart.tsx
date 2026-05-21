@@ -2,6 +2,7 @@
 
 import Image from "next/image";
 import { useEffect, useRef, useState } from "react";
+import { SectionCard } from "@/components/ui/section-card";
 
 const trend = [
   { day: "월", visits: 81 },
@@ -150,7 +151,7 @@ export function MiniTrendChart() {
   }, [inView, viewWidth, points]);
 
   return (
-    <div className="flex h-[300px] w-full min-w-0 flex-col rounded-[18px] bg-gray-0 p-5 shadow-level-1">
+    <SectionCard className="h-[300px]" variant="panel">
       <div className="flex shrink-0 flex-wrap items-center gap-x-2 gap-y-1">
         <h2 className="flex items-center gap-2 text-heading-2 font-bold text-gray-900">
           <Image
@@ -319,6 +320,6 @@ export function MiniTrendChart() {
           ))}
         </svg>
       </div>
-    </div>
+    </SectionCard>
   );
 }

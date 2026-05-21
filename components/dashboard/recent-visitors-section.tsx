@@ -1,93 +1,13 @@
 import Image from "next/image";
-import { HostProfileCell } from "./host-profile-cell";
-
-type RecentVisitor = {
-  name: string;
-  badge: string;
-  company: string;
-  purpose: string;
-  host: string;
-  time: string;
-  exitTime: string;
-};
-
-const recentVisitors: RecentVisitor[] = [
-  {
-    name: "김민준",
-    badge: "B-0142",
-    company: "더존비즈온 협력사",
-    purpose: "프로젝트 미팅",
-    host: "플랫폼사업부 이서연",
-    time: "14:02",
-    exitTime: "-",
-  },
-  {
-    name: "박지후",
-    badge: "B-0139",
-    company: "클라우드 보안 컨설팅",
-    purpose: "보안 점검",
-    host: "정보보호팀 최현우",
-    time: "13:48",
-    exitTime: "-",
-  },
-  {
-    name: "이도윤",
-    badge: "B-0130",
-    company: "회계법인 한결",
-    purpose: "감사 자료 확인",
-    host: "재무팀 강도현",
-    time: "13:14",
-    exitTime: "-",
-  },
-  {
-    name: "한서준",
-    badge: "B-0128",
-    company: "더존테크원",
-    purpose: "장비 반입",
-    host: "인프라운영팀 박수빈",
-    time: "12:58",
-    exitTime: "13:45",
-  },
-  {
-    name: "오하린",
-    badge: "B-0126",
-    company: "스마트빌 파트너스",
-    purpose: "서비스 협의",
-    host: "서비스기획팀 윤지아",
-    time: "12:42",
-    exitTime: "-",
-  },
-  {
-    name: "김민준",
-    badge: "B-0142",
-    company: "더존비즈온 협력사",
-    purpose: "프로젝트 미팅",
-    host: "플랫폼사업부 이서연",
-    time: "12:30",
-    exitTime: "13:30",
-  },
-  {
-    name: "김민준",
-    badge: "B-0142",
-    company: "더존비즈온 협력사",
-    purpose: "프로젝트 미팅",
-    host: "플랫폼사업부 이서연",
-    time: "12:30",
-    exitTime: "13:20",
-  },
-];
-
-/** Contents02.svg 열 너비 (1023px 기준, 합 100%) */
-const TABLE_COL_WIDTHS = [
-  "11.1%",
-  "10.9%",
-  "17.4%",
-  "15.7%",
-  "21.5%",
-  "9.4%",
-  "10%",
-  "76px",
-] as const;
+import { HostProfileCell } from "@/components/dashboard/host-profile-cell";
+import { SectionCard } from "@/components/ui/section-card";
+import { SectionHeading } from "@/components/ui/section-heading";
+import { VisitorStatusBadge } from "@/components/ui/visitor-status-badge";
+import {
+  RECENT_VISITORS,
+  VISITOR_TABLE_COL_WIDTHS,
+} from "@/lib/dashboard/constants";
+import type { RecentVisitor } from "@/lib/dashboard/types";
 
 const cellBase = "align-middle py-0 text-left";
 const thCell = `${cellBase} whitespace-nowrap text-body-5 font-bold text-gray-600`;
@@ -103,25 +23,6 @@ function SearchIcon() {
       src="/icons/right.svg"
       width={18}
     />
-  );
-}
-
-const statusLabelBase =
-  "inline-flex h-6 w-fit items-center justify-center rounded-[4px] px-[6px] text-body-5 font-bold leading-none";
-
-function VisitorStatus({ exitTime }: { exitTime: string }) {
-  if (exitTime !== "-") {
-    return (
-      <span className={`${statusLabelBase} bg-gray-50 text-gray-600`}>
-        방문종료
-      </span>
-    );
-  }
-
-  return (
-    <span className={`${statusLabelBase} bg-blue-50 text-blue-500`}>
-      출입완료
-    </span>
   );
 }
 
@@ -141,7 +42,7 @@ function MobileVisitorCard({
             {visitor.badge}
           </p>
         </div>
-        <VisitorStatus exitTime={visitor.exitTime} />
+        <VisitorStatusBadge exitTime={visitor.exitTime} />
       </div>
       <dl className="grid grid-cols-[72px_1fr] gap-x-3 gap-y-1.5 text-body-5">
         <dt className="text-gray-600">회사</dt>
@@ -165,7 +66,7 @@ function DesktopTable() {
   return (
     <table className="w-full table-fixed border-collapse">
       <colgroup>
-        {TABLE_COL_WIDTHS.map((width) => (
+        {VISITOR_TABLE_COL_WIDTHS.map((width) => (
           <col key={width} style={{ width }} />
         ))}
       </colgroup>
@@ -182,7 +83,7 @@ function DesktopTable() {
         </tr>
       </thead>
       <tbody>
-        {recentVisitors.map((visitor, index) => (
+        {RECENT_VISITORS.map((visitor, index) => (
           <tr
             className="h-10 border-b border-gray-100 transition-colors last:border-b-0 hover:bg-neutral-30"
             key={`${visitor.name}-${visitor.time}-${visitor.exitTime}-${index}`}
@@ -221,7 +122,7 @@ function DesktopTable() {
               </p>
             </td>
             <td className={`${cellBase} w-px whitespace-nowrap pl-0 pr-4`}>
-              <VisitorStatus exitTime={visitor.exitTime} />
+              <VisitorStatusBadge exitTime={visitor.exitTime} />
             </td>
           </tr>
         ))}
@@ -232,59 +133,47 @@ function DesktopTable() {
 
 export function RecentVisitorsSection() {
   return (
-    <section className="flex w-full min-w-0 flex-col rounded-[12px] bg-gray-0 p-4 shadow-level-1 lg:h-[385px]">
-      <div className="flex shrink-0 flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
-        <div className="flex min-w-0 flex-wrap items-center gap-1.5">
-          <h2 className="flex items-center gap-2 text-heading-2 font-bold text-gray-900">
-            <Image
-              alt=""
-              aria-hidden
-              className="h-6 w-6 shrink-0 opacity-80"
-              height={24}
-              src="/icons/ic_user_24.svg"
-              width={24}
-            />
-            최근 도착 방문객
-          </h2>
-          <span
-            aria-hidden="true"
-            className="mx-0.5 hidden h-4 w-px shrink-0 bg-gray-100 sm:block"
-          />
+    <SectionCard className="lg:h-[385px]">
+      <SectionHeading
+        iconSrc="/icons/ic_user_24.svg"
+        meta={
           <p className="text-heading-2 font-medium text-gray-600">
             전체 <span className="font-bold text-blue-500">126</span>
           </p>
-        </div>
-
-        <div className="flex flex-wrap items-center gap-2 sm:justify-end">
-          <div className="relative min-w-0 flex-1 sm:flex-none">
-            <input
-              className="h-8 w-full min-w-[140px] rounded-input border border-gray-200 bg-gray-0 py-0 pr-9 pl-3 text-body-5 text-gray-900 outline-none transition placeholder:text-gray-400 focus:border-gray-700 sm:w-[178px]"
-              placeholder="이름을 검색하세요."
-              type="search"
+        }
+        title="최근 도착 방문객"
+        actions={
+          <>
+            <div className="relative min-w-0 flex-1 sm:flex-none">
+              <input
+                className="h-8 w-full min-w-[140px] rounded-input border border-gray-200 bg-gray-0 py-0 pr-9 pl-3 text-body-5 text-gray-900 outline-none transition placeholder:text-gray-400 focus:border-gray-700 sm:w-[178px]"
+                placeholder="이름을 검색하세요."
+                type="search"
+              />
+              <SearchIcon />
+            </div>
+            <button
+              className="h-8 shrink-0 rounded-button-compact bg-blue-500 px-3 text-body-5 font-bold text-gray-0 transition hover:bg-blue-700"
+              type="button"
+            >
+              검색
+            </button>
+            <span
+              aria-hidden="true"
+              className="mx-0.5 hidden h-5 w-px shrink-0 bg-gray-100 sm:block"
             />
-            <SearchIcon />
-          </div>
-          <button
-            className="h-8 shrink-0 rounded-button-compact bg-blue-500 px-3 text-body-5 font-bold text-gray-0 transition hover:bg-blue-700"
-            type="button"
-          >
-            검색
-          </button>
-          <span
-            aria-hidden="true"
-            className="mx-0.5 hidden h-5 w-px shrink-0 bg-gray-100 sm:block"
-          />
-          <button
-            className="h-8 shrink-0 rounded-button-compact border border-blue-500 bg-gray-0 px-3 text-body-5 font-bold text-blue-500 transition hover:bg-blue-50"
-            type="button"
-          >
-            전체보기
-          </button>
-        </div>
-      </div>
+            <button
+              className="h-8 shrink-0 rounded-button-compact border border-blue-500 bg-gray-0 px-3 text-body-5 font-bold text-blue-500 transition hover:bg-blue-50"
+              type="button"
+            >
+              전체보기
+            </button>
+          </>
+        }
+      />
 
       <div className="mt-2 max-h-[min(60vh,420px)] overflow-y-auto rounded-[12px] border border-gray-100 md:hidden">
-        {recentVisitors.map((visitor, index) => (
+        {RECENT_VISITORS.map((visitor, index) => (
           <MobileVisitorCard
             index={index}
             key={`m-${visitor.name}-${visitor.time}-${index}`}
@@ -298,6 +187,6 @@ export function RecentVisitorsSection() {
           <DesktopTable />
         </div>
       </div>
-    </section>
+    </SectionCard>
   );
 }

@@ -1,6 +1,5 @@
 import Image from "next/image";
-
-const HOST_AVATAR_SRC = "/icons/Atomic/Atomic/Avatar.svg";
+import { HEADER_HEIGHT_PX, PROFILE_AVATAR_SRC } from "@/lib/dashboard/constants";
 
 function ChevronDownIcon() {
   return (
@@ -23,7 +22,10 @@ function ChevronDownIcon() {
 
 export function DashboardHeader() {
   return (
-    <header className="sticky top-0 z-10 flex h-[60px] w-full items-center justify-between gap-4 border-b border-gray-100 bg-gray-0 px-6">
+    <header
+      className="sticky top-0 z-10 flex w-full items-center justify-between gap-4 border-b border-gray-100 bg-gray-0 px-6"
+      style={{ height: HEADER_HEIGHT_PX }}
+    >
       <h1 className="min-w-0 truncate text-heading-1 font-bold text-gray-900">
         더존 을지타워 방문객 시스템 관리자
       </h1>
@@ -42,7 +44,7 @@ export function DashboardHeader() {
             aria-hidden
             className="h-8 w-8 shrink-0 rounded-[12px] object-cover ring-1 ring-black/[0.06]"
             height={32}
-            src={HOST_AVATAR_SRC}
+            src={PROFILE_AVATAR_SRC}
             width={32}
           />
           <span className="text-body-3 font-semibold text-gray-900">김더존</span>

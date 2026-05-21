@@ -7,30 +7,13 @@ import { createPortal } from "react-dom";
 const PROFILE_MODAL_WIDTH = 600;
 const PROFILE_MODAL_HEIGHT = 400;
 
-const EULJI_TOWER_ADDRESS = "서울 중구 을지로 29 더존을지타워";
-const PROFILE_AVATAR_SRC = "/icons/Avatar.png";
+import {
+  EULJI_TOWER_ADDRESS,
+  PROFILE_AVATAR_SRC,
+} from "@/lib/dashboard/constants";
+import type { ProfileData } from "@/lib/dashboard/types";
 const PROFILE_AVATAR_WIDTH = 80;
 const PROFILE_AVATAR_HEIGHT = 96;
-
-export type ProfileData = {
-  rank: string;
-  name: string;
-  orgPath: string;
-  userId: string;
-  project: string;
-  officePhone: string;
-  fax: string;
-  mobile: string;
-  homePhone: string;
-  workEmail: string;
-  personalEmail: string;
-  address: string;
-  employeeId: string;
-  joinDate: string;
-  birthday: string;
-  qualifications: string;
-  statusMessage: string;
-};
 
 function parseHost(host: string) {
   const parts = host.trim().split(/\s+/);

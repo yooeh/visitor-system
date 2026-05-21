@@ -2,9 +2,10 @@
 
 import Image from "next/image";
 import { useState } from "react";
-import { ProfileModal } from "./profile-modal";
+import { ProfileModal } from "@/components/dashboard/profile-modal";
+import { PROFILE_AVATAR_SRC } from "@/lib/dashboard/constants";
 
-const HOST_AVATAR_SRC = "/icons/Avatar.png";
+const HOST_AVATAR_SRC = PROFILE_AVATAR_SRC;
 
 function HostAvatar() {
   return (

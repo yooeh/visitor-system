@@ -4,13 +4,15 @@ import Image from "next/image";
 import { useEffect, useId, type ReactNode } from "react";
 import { createPortal } from "react-dom";
 
-const PROFILE_MODAL_WIDTH = 600;
-const PROFILE_MODAL_HEIGHT = 400;
-
+import { AppIcon } from "@/components/ui/app-icon";
 import {
   EULJI_TOWER_ADDRESS,
   PROFILE_AVATAR_SRC,
+  PROFILE_ROW_ICONS,
 } from "@/lib/dashboard/constants";
+
+const PROFILE_MODAL_WIDTH = 600;
+const PROFILE_MODAL_HEIGHT = 400;
 import type { ProfileData } from "@/lib/dashboard/types";
 const PROFILE_AVATAR_WIDTH = 80;
 const PROFILE_AVATAR_HEIGHT = 96;
@@ -103,6 +105,12 @@ type ProfileModalProps = {
   onClose: () => void;
 };
 
+function ProfileRowIcon({ src }: { src: string }) {
+  return (
+    <AppIcon className="h-4 w-4 object-contain opacity-90" size={16} src={src} />
+  );
+}
+
 function ProfileRow({
   icon,
   children,
@@ -114,28 +122,13 @@ function ProfileRow({
 }) {
   return (
     <div className={`flex min-w-0 items-start gap-2 ${className}`}>
-      <span className="mt-0.5 flex h-4 w-4 shrink-0 items-center justify-center text-gray-500">
+      <span className="mt-0.5 flex h-4 w-4 shrink-0 items-center justify-center">
         {icon}
       </span>
       <span className="min-w-0 text-body-4 leading-[18px] text-gray-800">
         {children}
       </span>
     </div>
-  );
-}
-
-function GridIcon({ children }: { children: ReactNode }) {
-  return (
-    <svg
-      aria-hidden
-      className="h-4 w-4"
-      fill="none"
-      stroke="currentColor"
-      strokeWidth="1.5"
-      viewBox="0 0 16 16"
-    >
-      {children}
-    </svg>
   );
 }
 
@@ -221,10 +214,7 @@ export function ProfileModal({ open, host, onClose }: ProfileModalProps) {
                   <ProfileRow
                     className="mb-2"
                     icon={
-                      <GridIcon>
-                        <path d="M2 6h12M2 10h8" strokeLinecap="round" />
-                        <rect height="4" rx="0.5" width="4" x="10" y="4" />
-                      </GridIcon>
+                      <ProfileRowIcon src={PROFILE_ROW_ICONS.company} />
                     }
                   >
                     <span className="inline-flex min-w-0 flex-wrap items-center gap-1">
@@ -236,78 +226,56 @@ export function ProfileModal({ open, host, onClose }: ProfileModalProps) {
                   <div className="grid grid-cols-2 gap-x-4 gap-y-1.5">
                     <ProfileRow
                       icon={
-                        <GridIcon>
-                          <circle cx="8" cy="5" r="2.5" />
-                          <path d="M4 13c0-2 1.8-3 4-3s4 1 4 3" />
-                        </GridIcon>
+                        <ProfileRowIcon src={PROFILE_ROW_ICONS.userId} />
                       }
                     >
                       {profile.userId}
                     </ProfileRow>
                     <ProfileRow
                       icon={
-                        <GridIcon>
-                          <rect height="8" rx="1" width="12" x="2" y="3" />
-                          <path d="M5 6h6M5 8h4" strokeLinecap="round" />
-                        </GridIcon>
+                        <ProfileRowIcon src={PROFILE_ROW_ICONS.project} />
                       }
                     >
                       {profile.project}
                     </ProfileRow>
                     <ProfileRow
                       icon={
-                        <GridIcon>
-                          <path d="M3 4h4l2 3v5H5V7" strokeLinecap="round" />
-                        </GridIcon>
+                        <ProfileRowIcon src={PROFILE_ROW_ICONS.officePhone} />
                       }
                     >
                       {profile.officePhone}
                     </ProfileRow>
                     <ProfileRow
                       icon={
-                        <GridIcon>
-                          <rect height="6" rx="0.5" width="10" x="3" y="4" />
-                          <path d="M5 8h6" />
-                        </GridIcon>
+                        <ProfileRowIcon src={PROFILE_ROW_ICONS.fax} />
                       }
                     >
                       {profile.fax}
                     </ProfileRow>
                     <ProfileRow
                       icon={
-                        <GridIcon>
-                          <rect height="10" rx="1.5" width="7" x="4.5" y="2" />
-                          <path d="M8 11v1" />
-                        </GridIcon>
+                        <ProfileRowIcon src={PROFILE_ROW_ICONS.mobile} />
                       }
                     >
                       {profile.mobile}
                     </ProfileRow>
                     <ProfileRow
                       icon={
-                        <GridIcon>
-                          <path d="M3 8h4v4H3zM9 6h4v6H9z" />
-                        </GridIcon>
+                        <ProfileRowIcon src={PROFILE_ROW_ICONS.homePhone} />
                       }
                     >
                       {profile.homePhone}
                     </ProfileRow>
                     <ProfileRow
                       icon={
-                        <GridIcon>
-                          <rect height="8" rx="1" width="12" x="2" y="4" />
-                          <path d="M2 5l6 4 6-4" />
-                        </GridIcon>
+                        <ProfileRowIcon src={PROFILE_ROW_ICONS.workEmail} />
                       }
                     >
                       {profile.workEmail}
                     </ProfileRow>
                     <ProfileRow
                       icon={
-                        <GridIcon>
-                          <rect height="8" rx="1" width="12" x="2" y="4" />
-                          <path d="M2 5l6 4 6-4" />
-                        </GridIcon>
+                        <ProfileRowIcon src={PROFILE_ROW_ICONS.personalEmail} />
                       }
                     >
                       {profile.personalEmail}
@@ -315,39 +283,28 @@ export function ProfileModal({ open, host, onClose }: ProfileModalProps) {
                     <ProfileRow
                       className="col-span-2"
                       icon={
-                        <GridIcon>
-                          <path d="M4 7h8M6 5h4M5 11h6" />
-                        </GridIcon>
+                        <ProfileRowIcon src={PROFILE_ROW_ICONS.address} />
                       }
                     >
                       {profile.address}
                     </ProfileRow>
                     <ProfileRow
                       icon={
-                        <GridIcon>
-                          <rect height="7" rx="1" width="10" x="3" y="4.5" />
-                          <path d="M6 7h4" />
-                        </GridIcon>
+                        <ProfileRowIcon src={PROFILE_ROW_ICONS.employeeId} />
                       }
                     >
                       {profile.employeeId}
                     </ProfileRow>
                     <ProfileRow
                       icon={
-                        <GridIcon>
-                          <rect height="9" rx="1" width="10" x="3" y="3" />
-                          <path d="M5 6h6M5 8h4" />
-                        </GridIcon>
+                        <ProfileRowIcon src={PROFILE_ROW_ICONS.joinDate} />
                       }
                     >
                       {profile.joinDate}
                     </ProfileRow>
                     <ProfileRow
                       icon={
-                        <GridIcon>
-                          <path d="M4 10c2-3 6-3 8 0" />
-                          <rect height="3" rx="0.5" width="8" x="4" y="5" />
-                        </GridIcon>
+                        <ProfileRowIcon src={PROFILE_ROW_ICONS.birthday} />
                       }
                     >
                       <span className="inline-flex flex-wrap items-center gap-2">
@@ -362,9 +319,7 @@ export function ProfileModal({ open, host, onClose }: ProfileModalProps) {
                     </ProfileRow>
                     <ProfileRow
                       icon={
-                        <GridIcon>
-                          <path d="M8 3l1.2 3.6H13l-3 2.2 1.1 3.6L8 10.2 4.9 12.4 6 8.8 3 6.6h3.8L8 3z" />
-                        </GridIcon>
+                        <ProfileRowIcon src={PROFILE_ROW_ICONS.qualifications} />
                       }
                     >
                       {profile.qualifications}
@@ -372,9 +327,7 @@ export function ProfileModal({ open, host, onClose }: ProfileModalProps) {
                     <ProfileRow
                       className="col-span-2"
                       icon={
-                        <GridIcon>
-                          <path d="M3 5h10v5H6l-2 2V10H3V5z" />
-                        </GridIcon>
+                        <ProfileRowIcon src={PROFILE_ROW_ICONS.statusMessage} />
                       }
                     >
                       {profile.statusMessage}

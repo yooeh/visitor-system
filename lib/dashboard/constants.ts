@@ -261,3 +261,22 @@ export const DASHBOARD_ALERTS: DashboardAlert[] = [
 
 export const EULJI_TOWER_ADDRESS = "서울 중구 을지로 29 더존을지타워";
 export const PROFILE_AVATAR_SRC = "/icons/Avatar.png";
+
+/** 프로필 모달 행 아이콘 — public/icons SVG */
+export const PROFILE_ROW_ICONS = {
+  company: "/icons/ic-comp-02-m-normal.svg",
+  userId: "/icons/ic-user-m-normal.png",
+  project: "/icons/ic-pc-m-normal.svg",
+  officePhone: "/icons/ic-phone-01-m-normal.svg",
+  fax: "/icons/ic-print-m-normal.svg",
+  mobile: "/icons/ic-mobile-m-normal.svg",
+  homePhone: "/icons/ic-phone-01-m-normal.svg",
+  workEmail: "/icons/ic-mail-m-normal.svg",
+  personalEmail: "/icons/ic-mail-m-normal.svg",
+  address: "/icons/ic-address-m-normal.svg",
+  employeeId: "/icons/ic_id.svg",
+  joinDate: "/icons/ic-calendar-m-normal.svg",
+  birthday: "/icons/ic-birthday-m-normal.svg",
+  qualifications: "/icons/ic-important-off-m-normal.svg",
+  statusMessage: "/icons/ic-comment-m-normal.svg",
+} as const;

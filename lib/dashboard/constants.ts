@@ -8,8 +8,12 @@ import type {
 /** Figma SNB — 220px */
 export const SIDEBAR_WIDTH_PX = 220;
 
-/** Figma Header — 60px */
+/** Figma Header.svg — 60px */
 export const HEADER_HEIGHT_PX = 60;
+
+export const DASHBOARD_HEADER_TITLE = "더존 을지타워 방문객 시스템 관리자";
+export const DASHBOARD_HEADER_DATETIME = "2026.05.20 수요일 14:20";
+export const DASHBOARD_HEADER_USER_NAME = "김더존";
 
 export const DASHBOARD_METRICS: DashboardMetric[] = [
   {
@@ -134,7 +138,96 @@ export const RECENT_VISITORS: RecentVisitor[] = [
     time: "12:30",
     exitTime: "13:20",
   },
+  {
+    name: "정예린",
+    badge: "B-0124",
+    company: "네오소프트",
+    purpose: "계약 검토",
+    host: "법무팀 김지훈",
+    time: "12:18",
+    exitTime: "-",
+  },
+  {
+    name: "송하늘",
+    badge: "B-0122",
+    company: "아이티파트너스",
+    purpose: "시스템 점검",
+    host: "인프라운영팀 박수빈",
+    time: "12:05",
+    exitTime: "-",
+  },
+  {
+    name: "윤채원",
+    badge: "B-0120",
+    company: "글로벌 물류",
+    purpose: "납품 확인",
+    host: "재무팀 강도현",
+    time: "11:52",
+    exitTime: "12:40",
+  },
+  {
+    name: "임도현",
+    badge: "B-0118",
+    company: "한빛 컨설팅",
+    purpose: "교육 진행",
+    host: "서비스기획팀 윤지아",
+    time: "11:38",
+    exitTime: "-",
+  },
+  {
+    name: "조서연",
+    badge: "B-0116",
+    company: "미래전자",
+    purpose: "제품 시연",
+    host: "플랫폼사업부 이서연",
+    time: "11:24",
+    exitTime: "-",
+  },
+  {
+    name: "배준호",
+    badge: "B-0114",
+    company: "세림 인쇄",
+    purpose: "자료 인쇄",
+    host: "정보보호팀 최현우",
+    time: "11:10",
+    exitTime: "11:55",
+  },
+  {
+    name: "홍지아",
+    badge: "B-0112",
+    company: "라온 미디어",
+    purpose: "촬영 협조",
+    host: "서비스기획팀 윤지아",
+    time: "10:58",
+    exitTime: "-",
+  },
+  {
+    name: "서민재",
+    badge: "B-0110",
+    company: "동방 엔지니어링",
+    purpose: "설비 점검",
+    host: "인프라운영팀 박수빈",
+    time: "10:44",
+    exitTime: "-",
+  },
+  {
+    name: "권수아",
+    badge: "B-0108",
+    company: "프라임 솔루션",
+    purpose: "데모 미팅",
+    host: "플랫폼사업부 이서연",
+    time: "10:30",
+    exitTime: "11:15",
+  },
 ];
+
+/** Contents02 — thead 28px + tbody row 40px × 7행 (하단 구분선 = 박스 테두리) */
+export const VISITOR_TABLE_HEADER_HEIGHT_PX = 28;
+export const VISITOR_TABLE_ROW_HEIGHT_PX = 40;
+export const VISITOR_TABLE_VISIBLE_ROWS = 7;
+export const VISITOR_TABLE_VIEWPORT_HEIGHT_PX =
+  VISITOR_TABLE_HEADER_HEIGHT_PX +
+  VISITOR_TABLE_ROW_HEIGHT_PX * VISITOR_TABLE_VISIBLE_ROWS;
 
 /** Contents02.svg column widths (1023px frame) */
 export const VISITOR_TABLE_COL_WIDTHS = [

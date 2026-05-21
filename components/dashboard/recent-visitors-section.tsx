@@ -6,6 +6,7 @@ import { VisitorStatusBadge } from "@/components/ui/visitor-status-badge";
 import {
   RECENT_VISITORS,
   VISITOR_TABLE_COL_WIDTHS,
+  VISITOR_TABLE_VIEWPORT_HEIGHT_PX,
 } from "@/lib/dashboard/constants";
 import type { RecentVisitor } from "@/lib/dashboard/types";
 
@@ -70,7 +71,7 @@ function DesktopTable() {
           <col key={width} style={{ width }} />
         ))}
       </colgroup>
-      <thead>
+      <thead className="sticky top-0 z-10">
         <tr className="h-7 border-b border-gray-100 bg-neutral-30">
           <th className={`${thCell} pl-4 pr-0`}>방문객</th>
           <th className={`${thCell} px-0`}>방문증 코드</th>
@@ -133,7 +134,8 @@ function DesktopTable() {
 
 export function RecentVisitorsSection() {
   return (
-    <SectionCard className="lg:h-[385px]">
+    <SectionCard className="flex min-h-0 flex-col lg:h-[385px]">
+      <div className="shrink-0">
       <SectionHeading
         iconSrc="/icons/ic_user_24.svg"
         meta={
@@ -171,19 +173,28 @@ export function RecentVisitorsSection() {
           </>
         }
       />
-
-      <div className="mt-2 max-h-[min(60vh,420px)] overflow-y-auto rounded-[12px] border border-gray-100 md:hidden">
-        {RECENT_VISITORS.map((visitor, index) => (
-          <MobileVisitorCard
-            index={index}
-            key={`m-${visitor.name}-${visitor.time}-${index}`}
-            visitor={visitor}
-          />
-        ))}
       </div>
 
-      <div className="mt-2 hidden min-h-0 w-full flex-1 flex-col overflow-hidden rounded-[12px] border border-gray-100 md:flex">
-        <div className="min-h-0 w-full flex-1 overflow-x-auto overflow-y-hidden md:overflow-x-visible">
+      <div
+        className="mt-2 shrink-0 overflow-hidden rounded-[12px] border border-gray-100 md:hidden"
+        style={{ height: VISITOR_TABLE_VIEWPORT_HEIGHT_PX }}
+      >
+        <div className="h-full overflow-y-auto">
+          {RECENT_VISITORS.map((visitor, index) => (
+            <MobileVisitorCard
+              index={index}
+              key={`m-${visitor.name}-${visitor.time}-${index}`}
+              visitor={visitor}
+            />
+          ))}
+        </div>
+      </div>
+
+      <div className="mt-2 hidden shrink-0 overflow-hidden rounded-[12px] border border-gray-100 md:block">
+        <div
+          className="overflow-x-auto overflow-y-auto md:overflow-x-visible"
+          style={{ height: VISITOR_TABLE_VIEWPORT_HEIGHT_PX }}
+        >
           <DesktopTable />
         </div>
       </div>
